@@ -1,0 +1,1 @@
+sqlcmd -U demo -P demo -i db.sql

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <FscToolPath>C:\Program Files (x86)\Microsoft SDKs\F#\4.1\Framework\v4.0</FscToolPath>
+    <FscToolExe>fsc.exe</FscToolExe>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Database.fs" />
+    <Compile Include="Invoice.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="FSharp.Core" Version="4.3.4.0" />
+    <PackageReference Include="Giraffe" Version="1.1.0" />
+    <PackageReference Include="Saturn" Version="0.4.3" />
+    <PackageReference Include="SqlProvider" Version="1.1.37" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.2" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy ..\..\..\..\..\.nuget\packages\System.Data.SqlClient\4.4.2\runtimes\win\lib\netstandard2.0\System.Data.SqlClient.dll bin\Debug\netcoreapp2.0\" />
+  </Target>
+</Project>

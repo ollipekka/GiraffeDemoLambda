@@ -1,0 +1,1 @@
+curl -H "Content-Type: application/json" -X POST -d "{\"Sum\": \"%2\", \"Supplier\":\"%1\"}" http://localhost:8085/invoices
