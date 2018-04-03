@@ -12,7 +12,6 @@
     <Compile Include="Invoice.fs" />
     <Compile Include="App.fs" />
     <Compile Include="Startup.fs" />
-    <Compile Include="LambdaEntryPoint.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
@@ -33,8 +32,4 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
     <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.1.1" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy ..\..\..\..\..\.nuget\packages\System.Data.SqlClient\4.4.2\runtimes\win\lib\netstandard2.0\System.Data.SqlClient.dll bin\Debug\netcoreapp2.0\" />
-  </Target>
 </Project>
