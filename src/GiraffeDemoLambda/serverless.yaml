@@ -1,0 +1,75 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Application that uses the ASP.NET Core framework running
+  in Amazon Lambda.
+Parameters:
+  ShouldCreateBucket:
+    Type: String
+    AllowedValues:
+    - 'true'
+    - 'false'
+    Description: If true then the S3 bucket that will be proxied will be created with
+      the CloudFormation stack.
+  BucketName:
+    Type: String
+    Description: Name of S3 bucket that will be proxied. If left blank a new table
+      will be created.
+    MinLength: '0'
+
+Conditions:
+  CreateS3Bucket:
+    Fn::Equals:
+    - Ref: ShouldCreateBucket
+    - 'true'
+  BucketNameGenerated:
+    Fn::Equals:
+    - Ref: BucketName
+    - ''
+
+Resources:
+  ProxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: GiraffeDemo::GiraffeDemo.LambdaEntryPoint::FunctionHandlerAsync
+      Runtime: dotnetcore2.0
+      CodeUri: ''
+      MemorySize: 256
+      Timeout: 30
+      Role:
+      Policies:
+      - AWSLambdaFullAccess
+      Events:
+        PutResource:
+          Type: Api
+          Properties:
+            Path: "/{proxy+}"
+            Method: ANY
+  ConfigLambdaPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn:
+    - ProxyFunction
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+        - ProxyFunction
+        - Arn
+      Principal: apigateway.amazonaws.com
+  InvoiceTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: InvoiceTable
+      AttributeDefinitions:
+      - AttributeName: Id
+        AttributeType: S
+      - AttributeName: Date
+        AttributeType: S
+      KeySchema:
+      - AttributeName: Id
+        KeyType: HASH
+      - AttributeName: Date
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'

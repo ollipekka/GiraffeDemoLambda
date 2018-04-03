@@ -10,6 +10,9 @@
   <ItemGroup>
     <Compile Include="Database.fs" />
     <Compile Include="Invoice.fs" />
+    <Compile Include="App.fs" />
+    <Compile Include="Startup.fs" />
+    <Compile Include="LambdaEntryPoint.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
@@ -18,9 +21,19 @@
     <PackageReference Include="FSharp.Core" Version="4.3.4.0" />
     <PackageReference Include="Giraffe" Version="1.1.0" />
     <PackageReference Include="Saturn" Version="0.4.3" />
-    <PackageReference Include="SqlProvider" Version="1.1.37" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.4.2" />
+    
+    <PackageReference Include="AWSSDK.S3" Version="3.3.16.2" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.3.6.2" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.4" />
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="2.0.1" />
+
   </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+    <DotNetCliToolReference Include="Amazon.Lambda.Tools" Version="2.1.1" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
       <Exec Command="copy ..\..\..\..\..\.nuget\packages\System.Data.SqlClient\4.4.2\runtimes\win\lib\netstandard2.0\System.Data.SqlClient.dll bin\Debug\netcoreapp2.0\" />
   </Target>

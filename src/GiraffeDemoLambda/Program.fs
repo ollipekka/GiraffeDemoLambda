@@ -15,25 +15,20 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.Builder
 
+open GiraffeDemo.Startup
+
 let topRouter = scope {
     not_found_handler (setStatusCode 404 >=> text "Not Found")
     forward "/invoices" invoiceController
 }
 
 
-let configureApp (app : IApplicationBuilder) =
-    app.UseGiraffe topRouter
-
-let configureServices(services: IServiceCollection) =
-    services.AddGiraffe() |> ignore
-    services.ConfigureDatabase() |> ignore
 
 [<EntryPoint>]
 let main _argv =    
     WebHostBuilder()
         .UseKestrel()
-        .Configure(Action<IApplicationBuilder> configureApp)
-        .ConfigureServices(Action<IServiceCollection> configureServices)
+        .UseStartup<Startup>()
         .Build()
         .Run()
     0
