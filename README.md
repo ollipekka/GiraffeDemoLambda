@@ -9,7 +9,7 @@ Giraffe demo with Saturn and Sql Provider
 * SQLProvider
   * with SQLServer
 * Giraffe and Saturn.
-
+  * <https://github.com/dotnet/corefx/issues/24282>
 
 ## Problems
 
