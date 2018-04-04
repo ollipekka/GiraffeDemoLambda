@@ -16,7 +16,9 @@ module Startup =
             app.UseGiraffe App.WebApp
 
         member _this.ConfigureServices (services: IServiceCollection) =
-            services.AddGiraffe() |> ignore
+            services
+                .AddAWSService<Amazon.DynamoDBv2.IAmazonDynamoDB>()
+                .AddGiraffe() |> ignore
 
 open Startup
 type public LambdaEntryPoint () =

@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Database.fs" />
     <Compile Include="Invoice.fs" />
     <Compile Include="App.fs" />
     <Compile Include="Startup.fs" />
